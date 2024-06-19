@@ -12,7 +12,7 @@ from sklearn.linear_model import LogisticRegression
 # define functions
 def main(args):
     # TO DO: enable autologging
-
+    mlflow.autolog()
 
     # read data
     df = get_csvs_df(args.training_data)
@@ -36,7 +36,8 @@ def get_csvs_df(path):
 # TO DO: add function to split data
 
 
-def train_model(reg_rate, X_train, X_test, y_train, y_test):
+
+def train_model(reg_rate, X_train, X_test, y_train, y_test, split_data):
     # train model
     LogisticRegression(C=1/reg_rate, solver="liblinear").fit(X_train, y_train)
 
@@ -50,6 +51,7 @@ def parse_args():
                         type=str)
     parser.add_argument("--reg_rate", dest='reg_rate',
                         type=float, default=0.01)
+    parser.add_argument("--split_data", dest='split_data', type=str)
 
     # parse args
     args = parser.parse_args()
